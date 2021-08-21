@@ -1,65 +1,62 @@
-const memory8GB = document.getElementById('memory-8GB')
-const memory16GB = document.getElementById('memory-16GB')
 const memoryCost = document.getElementById('memory-cost')
-const storage256GB = document.getElementById('storage-256GB')
-const storage512GB = document.getElementById('storage-512GB')
-const storage1TB = document.getElementById('storage-1TB')
 const storageCost = document.getElementById('storage-cost')
 const deliveryCost = document.getElementById('delivery-charge')
-const freeDelivery = document.getElementById('free-delivery')
-const paidDelivery = document.getElementById('paid-delivery')
 const total = document.getElementById('total')
 const macBookPrice = document.getElementById('best-price')
-
+const promoInput = document.getElementById('promo-input')
+const discountPriceText = document.getElementById('discount-price')
+// function for calculate item cost
+function getItemCost(item, price){
+    const itemCost = document.getElementById(item);
+    itemCost.innerText = price;
+    updateTotal()
+}
 //   memory cost
-memory8GB.addEventListener('click', function(){ 
-    memoryCost.innerText = '0'
-    updateTotal()
+document.getElementById('memory-8GB').addEventListener('click', function () {
+    getItemCost('memory-cost', 0)
 })
-memory16GB.addEventListener('click', function(){
-    memoryCost.innerText = '180'
-    updateTotal()
+document.getElementById('memory-16GB').addEventListener('click', function () {
+    getItemCost('memory-cost', 180)
 })
 // storage cost
-storage256GB.addEventListener('click', function(){
-     storageCost.innerText = '0'
-    updateTotal()
+document.getElementById('storage-256GB').addEventListener('click', function () {
+    getItemCost('storage-cost', 0)
 })
-storage512GB.addEventListener('click', function(){
-    storageCost.innerText = '100'
-    updateTotal()
+document.getElementById('storage-512GB').addEventListener('click', function () {
+    getItemCost('storage-cost', 100)
 })
-storage1TB.addEventListener('click', function(){
-    storageCost.innerText = '180'
-    updateTotal()
+document.getElementById('storage-1TB').addEventListener('click', function () {
+    getItemCost('storage-cost',180)
 })
 // delivery cost
-freeDelivery.addEventListener('click', function(){
-    deliveryCost.innerText = '0'
-    updateTotal()
+document.getElementById('free-delivery').addEventListener('click', function () {
+    getItemCost('delivery-charge', 0)
 })
-paidDelivery.addEventListener('click', function(){
-    deliveryCost.innerText = '20'
-    updateTotal()
+document.getElementById('paid-delivery').addEventListener('click', function () {
+    getItemCost('delivery-charge', 20)
 })
-
-// document.getElementById('promo-code-btn').addEventListener('click',function(){
-//     const promoCodeInput = document.getElementById('promo-code-input')
-//     const discountPriceText = document.getElementById('discount-price')
-//     let discountPrice = Number(discountPriceText.innerText)
-//     if(promoCodeInput.value == 'stevekaku'){
-//        discountPriceText = updateTotal()
-//     }
-//     else{
-//         alert('u have enterd wrong promo code')
-//     }
-//     promoCodeInput.value = ''
-// })
-function updateTotal(){
-    const bestPrice = Number(macBookPrice.innerText)
-    const extraMemoryCost  = Number(memoryCost.innerText);
-    const extraStorageCost = Number(storageCost.innerText)
-    const extraDeliveryCost = Number(deliveryCost.innerText) 
+document.getElementById('promo-btn').addEventListener('click', function () {
+    discount()
+})
+//  total cost 
+function updateTotal() {
+    const bestPrice = parseInt(macBookPrice.innerText)
+    const extraMemoryCost = parseInt(memoryCost.innerText);
+    const extraStorageCost = parseInt(storageCost.innerText)
+    const extraDeliveryCost = parseInt(deliveryCost.innerText)
     const grandTotal = bestPrice + extraMemoryCost + extraStorageCost + extraDeliveryCost
     total.innerText = grandTotal
+    discountPriceText.innerText = total.innerText
+}
+// discount function
+function discount(){
+    let discountPrice = parseInt(discountPriceText.innerText)
+    promoCode = promoInput.value
+    if (promoCode == 'stevekaku') {
+        discountPriceText.innerText = parseInt((total.innerText /100)*80)
+    }
+    else (
+        alert('you have enterd wrong promo code')
+    )
+    promoInput.value = ''
 }
